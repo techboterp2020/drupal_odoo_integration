@@ -1,0 +1,16 @@
+<odoo>
+    <record id="view_partner_form_drupal" model="ir.ui.view">
+        <field name="name">res.partner.form.drupal</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales_purchases']" position="inside">
+                <group string="Drupal Integration">
+                    <field name="sync_with_drupal"/>
+                    <field name="drupal_id"/>
+                    <button name="action_sync_to_drupal" type="object" string="Sync to Drupal" class="btn btn-primary"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

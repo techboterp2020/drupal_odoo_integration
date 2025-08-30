@@ -1,0 +1,39 @@
+<odoo>
+    <record id="drupal_config_wizard_form_view" model="ir.ui.view">
+        <field name="name">drupal.config.wizard.form</field>
+        <field name="model">drupal.config.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Drupal Configuration">
+                <group>
+                    <field name="drupal_url"/>
+                    <field name="drupal_username"/>
+                    <field name="drupal_password"/>
+                </group>
+                <footer>
+                    <button name="action_save_config" string="Save" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_drupal_config_wizard" model="ir.actions.act_window">
+        <field name="name">Drupal Configuration</field>
+        <field name="res_model">drupal.config.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="menu_drupal_root"
+        name="Drupal"
+        sequence="50"
+        web_icon="drupal_odoo_integration,static/description/icon.png"/>
+
+    <menuitem
+        id="menu_drupal_config"
+        name="Configuration"
+        parent="menu_drupal_root"
+        sequence="100"
+        action="action_drupal_config_wizard"/>
+</odoo>

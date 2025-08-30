@@ -1,0 +1,19 @@
+<odoo>
+    <data>
+        <record id="action_import_products_from_drupal" model="ir.actions.server">
+            <field name="name">Import Products from Drupal</field>
+            <field name="model_id" ref="product.model_product_template"/>
+            <field name="binding_model_id" ref="product.model_product_template"/>
+            <field name="state">code</field>
+            <field name="code">model.action_import_from_drupal()</field>
+        </record>
+
+        <record id="action_import_orders_from_drupal" model="ir.actions.server">
+            <field name="name">Import Orders from Drupal</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
+            <field name="state">code</field>
+            <field name="code">model.action_import_from_drupal()</field>
+        </record>
+    </data>
+</odoo>
