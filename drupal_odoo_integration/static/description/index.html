@@ -160,11 +160,12 @@
         </div>
       </div>
       <div class="hero-card fade-up">
-<div class="hero-shot">
-<img src="icon.png" alt="Odoo Drupal Integration Screenshot" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">
-</div>
-<div class="muted" style="margin-top:10px; font-size:13px">Powered By <code>Techbot Information Technology LLC</code></div>
-</div>
+        <div class="hero-shot">
+          <!-- ONLY CHANGE: path below -->
+          <img src="static/description/icon.png" alt="Odoo Drupal Integration Screenshot" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">
+        </div>
+        <div class="muted" style="margin-top:10px; font-size:13px">Powered By <code>Techbot Information Technology LLC</code></div>
+      </div>
     </div>
   </section>
 
@@ -219,8 +220,9 @@
           <h3>Configure credentials</h3>
           <p>Go to <strong>Drupal → Configuration</strong> and enter the Drupal URL, username, and password.</p>
           <div class="shot">
-            <a href="screenshot_1.png" target="_blank">
-              <img src="screenshot_1.png" alt="Configure credentials" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+            <!-- ONLY CHANGE: paths below -->
+            <a href="static/description/screenshot_1.png" target="_blank">
+              <img src="static/description/screenshot_1.png" alt="Configure credentials" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
             </a>
           </div>
         </div>
@@ -229,8 +231,9 @@
           <h3>Enable sync on records</h3>
           <p>On Product or Customer form, tick <em>Sync with Drupal</em> then click sync button to push.</p>
           <div class="shot">
-            <a href="screenshot_2.png" target="_blank">
-              <img src="screenshot_2.png" alt="Enable sync on records" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+            <!-- ONLY CHANGE: paths below -->
+            <a href="static/description/screenshot_2.png" target="_blank">
+              <img src="static/description/screenshot_2.png" alt="Enable sync on records" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
             </a>
           </div>
         </div>
@@ -239,8 +242,9 @@
           <h3>Let automation run</h3>
           <p>A background job runs every 4 hours. You can always override with manual bulk actions.</p>
           <div class="shot">
-            <a href="screenshot_3.png" target="_blank">
-              <img src="screenshot_3.png" alt="Automation run" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
+            <!-- ONLY CHANGE: paths below -->
+            <a href="static/description/screenshot_3.png" target="_blank">
+              <img src="static/description/screenshot_3.png" alt="Automation run" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
             </a>
           </div>
         </div>
@@ -333,7 +337,7 @@
   </footer>
 
   <script>
-    // simple scroll reveal
+    // simple scroll reveal (kept as in your file)
     const io = new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){ e.target.classList.add('reveal'); io.unobserve(e.target); }
