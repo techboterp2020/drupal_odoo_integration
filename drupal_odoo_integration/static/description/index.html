@@ -1,349 +1,112 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Odoo ⇄ Drupal Integration | App Store Showcase</title>
-  <meta name="description" content="Bi-directional sync between Odoo and Drupal. Easy setup, scheduled jobs, and manual control for products, customers, and orders." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      /* Red, Black, White theme */
-      --bg: #000000;           /* black */
-      --bg-2: #111111;         /* near-black */
-      --card: #171717;         /* dark card */
-      --border: #2a2a2a;       /* subtle borders */
-      --muted: #c9c9c9;        /* soft gray */
-      --text: #ffffff;         /* white */
-      --primary: #e50914;      /* red */
-      --primary-2: #b50810;    /* darker red for gradients */
-      --accent: #ff4d57;       /* bright red accent */
-      --radius: 18px;
-      --shadow: 0 20px 40px rgba(0,0,0,.55);
-      --ring: 0 0 0 2px rgba(229,9,20,.45), 0 0 0 8px rgba(229,9,20,.08);
-    }
+<div style="font-family: Inter, sans-serif; background-color: #000000; color: #FFFFFF; margin: -15px;">
+    <table style="width: 100%; border-collapse: collapse;">
+        <tbody>
+            <tr>
+                <td style="padding: 14px 40px; background-color: #111111; border-bottom: 1px solid #2a2a2a;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="text-align: left; width: 50%;">
+                                <span style="font-weight: 800; font-size: 16px; color: #FFFFFF;">Odoo ⇄ Drupal Connector</span>
+                                <span style="display: inline-block; background-color: rgba(229,9,20,.18); color: #ffd7da; font-size: 12px; font-weight: 600; padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(229,9,20,.35); margin-left: 12px; vertical-align: middle;">Odoo Gold Partner</span>
+                            </td>
+                            <td style="text-align: right; width: 50%;">
+                                <span style="font-size: 14px; font-weight: 700; color: #c9c9c9; margin-left: 20px;">Features</span>
+                                <span style="font-size: 14px; font-weight: 700; color: #c9c9c9; margin-left: 20px;">How it Works</span>
+                                <a href="https://techboterp.com/" style="display: inline-block; background-color: #e50914; color: #fff; padding: 8px 16px; border-radius: 10px; text-decoration: none; font-weight: 700; margin-left: 20px;">Contact Techbot</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial;
-      color:var(--text);
-      background:
-        radial-gradient(900px 600px at 15% -10%, rgba(229,9,20,.22), transparent 60%),
-        radial-gradient(900px 600px at 110% 0%, rgba(255,255,255,.08), transparent 60%),
-        linear-gradient(180deg, var(--bg), var(--bg-2));
-      line-height:1.55;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-    a{color:inherit; text-decoration:none}
-    img{max-width:100%; display:block}
+            <tr>
+                <td style="padding: 80px 40px; background-color: #111111;">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 55%; vertical-align: middle; padding-right: 30px;">
+                                <h1 style="color: #e50914; font-size: 52px; font-weight: 800; line-height: 1.1; margin: 0 0 20px 0;">Odoo ⇄ Drupal Connector <br> Powered By Techbot ERP</h1>
+                                <p style="color: #c9c9c9; font-size: 18px; margin: 0 0 24px 0;">Connect, sync, and automate in minutes.</p>
+                            </td>
+                            <td style="width: 45%; vertical-align: middle;">
+                                <div style="background-color: #000000; border: 1px solid #2a2a2a; border-radius: 18px; padding: 10px;">
+                                    <img src="icon.png" alt="Odoo Drupal Integration Screenshot" style="width: 100%; border-radius: 14px;">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
 
-    /* Layout */
-    .container{width:min(1200px, 92vw); margin:0 auto}
-    header{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter:saturate(160%) blur(14px);
-      background:linear-gradient(180deg, rgba(0,0,0,.95), rgba(0,0,0,.85));
-      border-bottom:1px solid var(--border);
-    }
-    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
-    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.2px}
-    .badge{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; background:rgba(229,9,20,.18); color:#ffd7da; font-weight:600; font-size:12px; border:1px solid rgba(229,9,20,.35)}
-    .actions{display:flex; gap:10px}
-    .btn{ --bg: #0f0f0f; display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px; background:var(--bg); border:1px solid var(--border); color:var(--text); font-weight:700; box-shadow:0 8px 20px rgba(0,0,0,.45); transition:.25s ease}
-    .btn:hover{ transform:translateY(-2px); box-shadow:0 14px 28px rgba(0,0,0,.65) }
-    .btn.primary{ --bg: linear-gradient(135deg, var(--primary), var(--primary-2)); border:0 }
+            <tr>
+                <td style="padding: 70px 40px;">
+                    <h2 style="color: #e50914; font-size: 36px; text-align: left; margin-bottom: 30px;">Key features</h2>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 15px; width: 25%; vertical-align: top;">
+                                <div style="background-color: #111111; border: 1px solid #2a2a2a; border-radius: 18px; padding: 25px; height: 160px;">
+                                    <h3 style="color: #FFFFFF; margin: 0 0 10px 0;">Easy Configuration</h3>
+                                    <p style="color: #c9c9c9; font-size: 14px; margin: 0;">Simple credential wizard to securely connect your Drupal site.</p>
+                                </div>
+                            </td>
+                            <td style="padding: 15px; width: 25%; vertical-align: top;">
+                                <div style="background-color: #111111; border: 1px solid #2a2a2a; border-radius: 18px; padding: 25px; height: 160px;">
+                                    <h3 style="color: #FFFFFF; margin: 0 0 10px 0;">Bi-directional Sync</h3>
+                                    <p style="color: #c9c9c9; font-size: 14px; margin: 0;">Push/pull products, customers, and orders between Odoo and Drupal.</p>
+                                </div>
+                            </td>
+                            <td style="padding: 15px; width: 25%; vertical-align: top;">
+                                <div style="background-color: #111111; border: 1px solid #2a2a2a; border-radius: 18px; padding: 25px; height: 160px;">
+                                    <h3 style="color: #FFFFFF; margin: 0 0 10px 0;">Automated Cron Job</h3>
+                                    <p style="color: #c9c9c9; font-size: 14px; margin: 0;">Preconfigured scheduled action runs every 4 hours.</p>
+                                </div>
+                            </td>
+                             <td style="padding: 15px; width: 25%; vertical-align: top;">
+                                <div style="background-color: #111111; border: 1px solid #2a2a2a; border-radius: 18px; padding: 25px; height: 160px;">
+                                    <h3 style="color: #FFFFFF; margin: 0 0 10px 0;">Manual Control</h3>
+                                    <p style="color: #c9c9c9; font-size: 14px; margin: 0;">Trigger syncs per record or run bulk imports with server actions.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
 
-    /* Hero */
-    .hero{ position:relative; padding:76px 0 48px; overflow:hidden }
-    .hero-grid{ display:grid; grid-template-columns: 1.1fr .9fr; align-items:center; gap:34px }
-    .title{font-size:clamp(30px, 5vw, 56px); line-height:1.05; margin:0 0 14px; color:var(--primary)}
-    .subtitle{color:var(--muted); font-size:clamp(14px, 2.2vw, 18px); margin:0 0 24px}
-    .logo-row{display:flex; align-items:center; gap:12px; margin-bottom:14px}
-    .logo-chip{display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px; background:#0f0f0f; border:1px solid var(--border)}
-    .chip-plus{ opacity:.9; font-weight:700; color:var(--primary) }
-    .hero-card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow) }
-    .hero-shot{ aspect-ratio: 16/10; border-radius:14px; border:1px solid var(--border); background:linear-gradient(135deg, rgba(229,9,20,.2), rgba(255,255,255,.06)); display:grid; place-items:center; color:#fff; font-weight:800; letter-spacing:.3px; text-transform:uppercase }
+            <tr>
+                <td style="padding: 70px 40px; background-color: #111111;">
+                    <h2 style="color: #e50914; font-size: 36px; text-align: left; margin-bottom: 30px;">How It Works</h2>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 15px; width: 33.33%; vertical-align: top;">
+                                <div style="background-color: #000000; border: 1px solid #2a2a2a; border-radius: 18px; padding: 25px;">
+                                    <h3 style="margin: 0 0 15px 0; color: #FFFFFF;">1. Configure Credentials</h3>
+                                    <img src="screenshot_1.png" alt="Configure credentials" style="width:100%; border-radius:12px; border:1px solid #2a2a2a;">
+                                </div>
+                            </td>
+                            <td style="padding: 15px; width: 33.33%; vertical-align: top;">
+                                <div style="background-color: #000000; border: 1px solid #2a2a2a; border-radius: 18px; padding: 25px;">
+                                    <h3 style="margin: 0 0 15px 0; color: #FFFFFF;">2. Configure Sync</h3>
+                                    <img src="screenshot_2.png" alt="Enable sync" style="width:100%; border-radius:12px; border:1px solid #2a2a2a;">
+                                </div>
+                            </td>
+                            <td style="padding: 15px; width: 33.33%; vertical-align: top;">
+                                <div style="background-color: #000000; border: 1px solid #2a2a2a; border-radius: 18px; padding: 25px;">
+                                    <h3 style="margin: 0 0 15px 0; color: #FFFFFF;">3. Automate Actions</h3>
+                                    <img src="screenshot_3.png" alt="Automation" style="width:100%; border-radius:12px; border:1px solid #2a2a2a;">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            
+            <tr>
+                <td style="padding: 80px 40px; text-align: center;">
+                     <h2 style="color: #e50914; font-size: 36px; margin-bottom: 20px;">Ready to use it?</h2>
+                     <p style="color: #c9c9c9; font-size: 18px; margin: auto; max-width: 600px;">Package is optimized for App Store review and screenshots. Drop the module in your addons path, update apps list, and configure credentials to go live.</p>
+                     <a href="https://techboterp.com/" style="display: inline-block; background-color: #e50914; color: #fff; padding: 15px 30px; border-radius: 10px; text-decoration: none; font-weight: 700; margin-top: 30px;">Contact Techbot</a>
+                </td>
+            </tr>
 
-    /* Section */
-    section{ padding:56px 0 }
-    .section-head{ display:flex; align-items:end; justify-content:space-between; margin-bottom:26px }
-    .h2{font-size:clamp(22px, 3.6vw, 32px); margin:0; color:var(--primary)}
-    .muted{ color:var(--muted) }
-
-    /* Features */
-    .grid{ display:grid; gap:18px }
-    .grid.features{ grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) }
-    .card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; transition:.25s ease; position:relative; overflow:hidden }
-    .card:hover{ transform: translateY(-3px); box-shadow:var(--shadow) }
-    .card .ic{ width:26px; height:26px; display:inline-grid; place-items:center; border-radius:10px; background:rgba(229,9,20,.2); border:1px solid rgba(229,9,20,.35); margin-bottom:10px }
-    .card h3{ margin:.2rem 0 .4rem; font-size:18px; color:var(--primary) }
-    .card p{ margin:0; color:var(--muted); font-size:14px }
-    .pill{ position:absolute; top:14px; right:14px; font-size:11px; padding:6px 10px; border-radius:999px; background:rgba(229,9,20,.18); color:#ffd7da; border:1px solid rgba(229,9,20,.35); font-weight:800; letter-spacing:.25px; text-transform:uppercase }
-
-    /* Timeline */
-    .timeline{ position:relative; display:grid; gap:18px; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)) }
-    .step{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px }
-    .step .num{ width:32px; height:32px; border-radius:8px; display:grid; place-items:center; background:rgba(229,9,20,.2); border:1px solid rgba(229,9,20,.35); font-weight:800; color:var(--primary) }
-    .shot{ aspect-ratio: 16/10; border-radius:12px; border:1px solid var(--border); background:linear-gradient(135deg, rgba(229,9,20,.16), rgba(255,255,255,.06)); display:grid; place-items:center; color:#fff; font-weight:800 }
-
-    /* Author / Trust */
-    .trust{ display:grid; grid-template-columns: 1.1fr .9fr; gap:22px }
-    .trust .panel{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:20px }
-    .stars{ color:var(--accent); letter-spacing:1px }
-    .partner{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:rgba(229,9,20,.12); color:#ffd7da; border:1px solid rgba(229,9,20,.35); font-weight:800; margin-top:8px; text-transform:uppercase }
-
-    /* FAQ */
-    .faq{ display:grid; gap:12px }
-    details{ background:var(--card); border:1px solid var(--border); border-radius:14px; padding:14px 16px }
-    summary{ cursor:pointer; font-weight:800; color:var(--primary) }
-    details p{ color:var(--muted); margin:.5rem 0 0 }
-
-    /* Footer */
-    footer{ padding:36px 0 60px; color:var(--muted) }
-    .foot{ display:grid; grid-template-columns:1.2fr .8fr; gap:16px; align-items:center }
-    .foot .cta{ display:flex; gap:10px; justify-content:flex-end }
-
-    /* Utilities */
-    .hide-mobile{ display:block }
-    @media (max-width:900px){
-      .hero-grid, .trust, .foot{ grid-template-columns: 1fr }
-      .hide-mobile{ display:none }
-    }
-    .ring:hover{ box-shadow: var(--ring) }
-    .fade-up{ opacity:0; translate: 0 12px; transition: .6s ease }
-    .fade-up.reveal{ opacity:1; translate: 0 0 }
-    .svg{ width:18px; height:18px; display:inline-block }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="container nav">
-      <div class="brand">
-        <span style="display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg, var(--primary), var(--primary-2)); font-weight:900">⇄</span>
-        Odoo ⇄ Drupal Connector
-        <span class="badge">odoo • Gold Partner • UAE</span>
-      </div>
-      <nav class="actions">
-        <a class="btn" href="#features">Features</a>
-        <a class="btn" href="#setup">How it works</a>
-        <a class="btn primary" href="https://techboterp.com/">Contact Techbot</a>
-      </nav>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="container hero-grid">
-      <div>
-        <div class="logo-row">
-          <div class="logo-chip" title="Odoo">
-            <!-- Minimal abstract Odoo chip -->
-            <svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/></svg>
-            <strong>Odoo</strong>
-          </div>
-          <span class="chip-plus">+</span>
-          <div class="logo-chip" title="Drupal">
-            <!-- Minimal abstract Drupal drop -->
-            <svg class="svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c2 3 6 4.5 6 9a6 6 0 1 1-12 0c0-4.5 4-6 6-9z"/></svg>
-            <strong>Drupal</strong>
-          </div>
-        </div>
-        <h1 class="title">Connect, sync, and automate in minutes</h1>
-        <p class="subtitle">Bi-directional product, customer, and order sync between Odoo and Drupal. Easy credential setup, scheduled jobs, and manual triggers when you need control.</p>
-        <div class="actions">
-          <a class="btn primary ring" href="#download">Get the module</a>
-          <a class="btn ring" href="#faq">View FAQ</a>
-        </div>
-      </div>
-      <div class="hero-card fade-up">
-        <div class="hero-shot">
-          <!-- ONLY CHANGE: path below -->
-          <img src="static/description/icon.png" alt="Odoo Drupal Integration Screenshot" style="width:100%; height:100%; object-fit:cover; border-radius:14px;">
-        </div>
-        <div class="muted" style="margin-top:10px; font-size:13px">Powered By <code>Techbot Information Technology LLC</code></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="features">
-    <div class="container">
-      <div class="section-head">
-        <h2 class="h2">Key features</h2>
-        <p class="muted hide-mobile">Built for clarity, speed, and reliability</p>
-      </div>
-
-      <div class="grid features">
-        <article class="card fade-up">
-          <span class="pill">Wizard</span>
-          <div class="ic">⚙️</div>
-          <h3>Easy configuration</h3>
-          <p>Simple credential wizard to securely connect your Drupal site in minutes.</p>
-        </article>
-        <article class="card fade-up">
-          <div class="ic">🔁</div>
-          <h3>Bi-directional sync</h3>
-          <p>Push products and customers to Drupal. Pull products and orders back into Odoo.</p>
-        </article>
-        <article class="card fade-up">
-          <div class="ic">⏱️</div>
-          <h3>Automated cron job</h3>
-          <p>Preconfigured scheduled action runs every 4 hours to keep data in lockstep.</p>
-        </article>
-        <article class="card fade-up">
-          <div class="ic">🎛️</div>
-          <h3>Manual control</h3>
-          <p>Trigger syncs per record or run bulk imports with dedicated server actions.</p>
-        </article>
-        <article class="card fade-up">
-          <div class="ic">🧩</div>
-          <h3>Native UX</h3>
-          <p>Fields and buttons live in Odoo forms for a familiar, intuitive workflow.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-<section id="setup">
-    <div class="container">
-      <div class="section-head">
-        <h2 class="h2">How it works</h2>
-        <p class="muted">Three clear steps to go live</p>
-      </div>
-
-      <div class="timeline">
-        <div class="step fade-up">
-          <div class="num">1</div>
-          <h3>Configure credentials</h3>
-          <p>Go to <strong>Drupal → Configuration</strong> and enter the Drupal URL, username, and password.</p>
-          <div class="shot">
-            <!-- ONLY CHANGE: paths below -->
-            <a href="static/description/screenshot_1.png" target="_blank">
-              <img src="static/description/screenshot_1.png" alt="Configure credentials" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-            </a>
-          </div>
-        </div>
-        <div class="step fade-up">
-          <div class="num">2</div>
-          <h3>Enable sync on records</h3>
-          <p>On Product or Customer form, tick <em>Sync with Drupal</em> then click sync button to push.</p>
-          <div class="shot">
-            <!-- ONLY CHANGE: paths below -->
-            <a href="static/description/screenshot_2.png" target="_blank">
-              <img src="static/description/screenshot_2.png" alt="Enable sync on records" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-            </a>
-          </div>
-        </div>
-        <div class="step fade-up">
-          <div class="num">3</div>
-          <h3>Let automation run</h3>
-          <p>A background job runs every 4 hours. You can always override with manual bulk actions.</p>
-          <div class="shot">
-            <!-- ONLY CHANGE: paths below -->
-            <a href="static/description/screenshot_3.png" target="_blank">
-              <img src="static/description/screenshot_3.png" alt="Automation run" style="width:100%; height:100%; object-fit:cover; border-radius:12px;">
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-</section>
-
-
-  <section id="trust">
-    <div class="container trust">
-      <div class="panel fade-up">
-        <h2 class="h2" style="margin-bottom:8px">About Techbot Information Technology LLC</h2>
-        <span class="partner">Odoo Gold Partner</span>
-        <p class="muted" style="margin-top:12px">We design, implement, and support enterprise-grade Odoo solutions. Our certified team ships integrations and customizations that are scalable, maintainable, and practical.</p>
-        <p class="stars" aria-label="rating">★★★★★</p>
-      </div>
-      <div class="panel fade-up">
-        <h3 style="margin:0 0 8px; color:var(--text)">Why teams pick this connector</h3>
-        <ul style="margin:0; padding-left:18px; color:var(--muted)">
-          <li>Fast initial setup with clear steps</li>
-          <li>Bi-directional sync that covers day to day essentials</li>
-          <li>Balance of automation and manual control</li>
-          <li>Clean UI ready for App Store screenshots</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="faq">
-    <div class="container">
-      <div class="section-head">
-        <h2 class="h2">FAQ</h2>
-        <p class="muted">Good to know before you install</p>
-      </div>
-
-      <div class="faq">
-        <details class="fade-up">
-          <summary>What entities are synced?</summary>
-          <p>Products and Customers can be pushed from Odoo to Drupal. Products and Orders can be pulled from Drupal into Odoo.</p>
-        </details>
-        <details class="fade-up">
-          <summary>How often does the scheduled job run?</summary>
-          <p>By default every 4 hours. You can change the interval in Scheduled Actions if needed.</p>
-        </details>
-        <details class="fade-up">
-          <summary>Can I run a manual bulk import?</summary>
-          <p>Yes. Use the provided server actions to run bulk operations when you need immediate updates.</p>
-        </details>
-        <details class="fade-up">
-          <summary>Where do I manage credentials?</summary>
-          <p>In Odoo under <strong>Drupal → Configuration</strong>.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <section id="download">
-    <div class="container">
-      <div class="section-head">
-        <h2 class="h2">Ready to use it?</h2>
-        <p class="muted">Package is optimized for App Store review and screenshots</p>
-      </div>
-      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
-        <div class="card fade-up">
-          <h3 style="color:var(--primary)">Install</h3>
-          <p class="muted">Drop the module in your addons path and update apps list. Configure credentials and you’re live.</p>
-          <div style="margin-top:12px"><a class="btn primary ring" href="#">Download ZIP</a></div>
-        </div>
-        <div class="card fade-up">
-          <h3 style="color:var(--primary)">Support</h3>
-          <p class="muted">Need help with setup or custom flows? Reach out and we’ll guide you.</p>
-          <div style="margin-top:12px"><a class="btn ring" href="https://techboterp.com/">Contact Techbot</a></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container foot">
-      <div>
-        <strong>Techbot Information Technology LLC</strong>
-        <div class="muted">Official Odoo Gold Partner</div>
-      </div>
-      <div class="cta">
-        <a class="btn" href="#features">Features</a>
-        <a class="btn" href="#setup">Setup</a>
-        <a class="btn primary" href="#download">Get Module</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // simple scroll reveal (kept as in your file)
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){ e.target.classList.add('reveal'); io.unobserve(e.target); }
-      })
-    }, {threshold:.12});
-    document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
-  </script>
-</body>
-</html>
+        </tbody>
+    </table>
+</div>
